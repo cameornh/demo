@@ -12,4 +12,7 @@ public class InventoryAlertDTO {
     private int daysUntilStockout;
     private String status; //'ok', 'warning', 'critical'
     private String recommendation; //'order now', 'wait'
+
+    private double suggestedPriceMarkup; //'0.15' for 15%
+    private String pricingRationale; //'high demand', 'low stock'
 }
