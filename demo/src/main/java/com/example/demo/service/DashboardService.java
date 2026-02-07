@@ -7,6 +7,7 @@ import jakarta.persistence.EntityManager;
 import jakarta.persistence.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,7 +19,9 @@ public class DashboardService {
     @Autowired
     private EntityManager entityManager;
 
+    @Transactional(readOnly = true)
     public List<InventoryAlertDTO> getManagerDashboard(int locationId) {
+        entityManager.clear();
         List<InventoryAlertDTO> alerts = new ArrayList<>();
         List<Ingredient> ingredients = ingredientRepository.findAll();
 
@@ -26,7 +29,7 @@ public class DashboardService {
             // 1. Get the latest stock level safely
             String sql = "SELECT stock_level FROM inventory_logs " +
                     "WHERE location_id = :locId AND ing_id = :ingId " +
-                    "ORDER BY log_date DESC LIMIT 1";
+                    "ORDER BY log_date DESC, log_id DESC LIMIT 1";
 
             Query q = entityManager.createNativeQuery(sql);
             q.setParameter("locId", locationId);
@@ -58,7 +61,6 @@ public class DashboardService {
             String status = "OK";
             String recommendation = "None";
 
-            // FIX: Just get the int value directly.
             // Since it is a primitive 'int', it will default to 0 if empty, but never null.
             int leadTime = ing.getLeadTimeDays();
 
