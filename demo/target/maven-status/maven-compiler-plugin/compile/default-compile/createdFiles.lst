@@ -1,0 +1,15 @@
+com/example/demo/model/Recipe.class
+com/example/demo/repository/InventoryLogRepository.class
+com/example/demo/dto/InventoryAlertDTO$InventoryAlertDTOBuilder.class
+com/example/demo/repository/RecipeRepository.class
+com/example/demo/model/RecipeId.class
+com/example/demo/model/Ingredient.class
+com/example/demo/dto/InventoryAlertDTO.class
+com/example/demo/model/InventoryLog.class
+com/example/demo/DemoApplication.class
+com/example/demo/repository/IngredientRepository.class
+com/example/demo/model/Order.class
+com/example/demo/service/DataStreamerService.class
+com/example/demo/controller/DashboardController.class
+com/example/demo/service/DashboardService.class
+com/example/demo/repository/OrderRepository.class

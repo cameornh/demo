@@ -1,0 +1,14 @@
+/Users/cameronhalaby/Desktop/hackathon/demo/src/main/java/com/example/demo/DemoApplication.java
+/Users/cameronhalaby/Desktop/hackathon/demo/src/main/java/com/example/demo/controller/DashboardController.java
+/Users/cameronhalaby/Desktop/hackathon/demo/src/main/java/com/example/demo/dto/InventoryAlertDTO.java
+/Users/cameronhalaby/Desktop/hackathon/demo/src/main/java/com/example/demo/model/Ingredient.java
+/Users/cameronhalaby/Desktop/hackathon/demo/src/main/java/com/example/demo/model/InventoryLog.java
+/Users/cameronhalaby/Desktop/hackathon/demo/src/main/java/com/example/demo/model/Order.java
+/Users/cameronhalaby/Desktop/hackathon/demo/src/main/java/com/example/demo/model/Recipe.java
+/Users/cameronhalaby/Desktop/hackathon/demo/src/main/java/com/example/demo/model/RecipeId.java
+/Users/cameronhalaby/Desktop/hackathon/demo/src/main/java/com/example/demo/repository/IngredientRepository.java
+/Users/cameronhalaby/Desktop/hackathon/demo/src/main/java/com/example/demo/repository/InventoryLogRepository.java
+/Users/cameronhalaby/Desktop/hackathon/demo/src/main/java/com/example/demo/repository/OrderRepository.java
+/Users/cameronhalaby/Desktop/hackathon/demo/src/main/java/com/example/demo/repository/RecipeRepository.java
+/Users/cameronhalaby/Desktop/hackathon/demo/src/main/java/com/example/demo/service/DashboardService.java
+/Users/cameronhalaby/Desktop/hackathon/demo/src/main/java/com/example/demo/service/DataStreamerService.java
