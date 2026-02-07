@@ -90,7 +90,8 @@ public class DataStreamerService {
 
         for (Recipe recipeItem : recipeItems) {
             long ingId = recipeItem.getId().getIngId();
-            int qtyNeeded = recipeItem.getQtyNeeded();
+            Integer qtyNeededObj = recipeItem.getQtyNeeded();
+            int qtyNeeded = (qtyNeededObj != null) ? qtyNeededObj : 1; // Default to 1 if null
 
             //find most recent stock level for this ingredient at this location
             Integer currentStock = getCurrentStock(order.getLocationId(), ingId);
@@ -142,5 +143,12 @@ public class DataStreamerService {
         return order;
     }
     //TODO: draw random variables from non uniform distributions
-    //TODO: time-series prediction, change dynamic pricing?, LLM
+    //TODO: time-series prediction (update burnout range), change dynamic pricing?
+
+    //TODO: implement event scheduling into frontend
+    //TODO: implement price changing system into frontend
+    //TODO: implement ordering system into frontend (auto restock)
+    //TODO: implement map in frontend (location optimization)
+    //TODO: implement "create new store at lat,lon" into frontend
+    //TODO: implement LLM for querying
 }
