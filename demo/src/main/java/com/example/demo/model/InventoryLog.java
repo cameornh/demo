@@ -10,6 +10,7 @@ import java.time.LocalDate;
 public class InventoryLog {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "log_id")
     private Long logId;
 
     @Column(name = "log_date")
