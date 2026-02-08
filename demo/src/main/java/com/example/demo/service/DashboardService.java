@@ -13,6 +13,7 @@ import jakarta.persistence.EntityManager;
 import jakarta.persistence.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
@@ -80,7 +81,7 @@ public class DashboardService {
         return suggestions;
     }
 
-    @Transactional(readOnly = true)
+    @Transactional(readOnly = true, propagation = Propagation.NOT_SUPPORTED)
     public List<InventoryAlertDTO> getManagerDashboard(int locationId) {
         entityManager.clear();
         List<InventoryAlertDTO> alerts = new ArrayList<>();
@@ -253,6 +254,8 @@ public class DashboardService {
                     .suggestedPriceMarkup(suggestedMarkup)
                     .pricingRationale(pricingRationale)
                     .recommendation(status.equals("CRITICAL") ? "ORDER IMMEDIATELY" : "Monitor Stock")
+                    .dataSource("aws-0-us-west-2.pooler.supabase.com")
+                    //.dataSource("localhost")
                     .build());
         }
         return alerts;
@@ -261,7 +264,7 @@ public class DashboardService {
     private Integer getCurrentStock(int locationId, long ingId) {
         String sql = "SELECT stock_level FROM inventory_logs " +
                 "WHERE location_id = :locId AND ing_id = :ingId " +
-                "ORDER BY log_date DESC, log_id DESC LIMIT 1";
+                "ORDER BY log_id DESC LIMIT 1";
 
         Query q = entityManager.createNativeQuery(sql);
         q.setParameter("locId", locationId);
