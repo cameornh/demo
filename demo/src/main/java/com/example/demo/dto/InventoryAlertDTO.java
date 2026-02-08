@@ -15,4 +15,6 @@ public class InventoryAlertDTO {
 
     private double suggestedPriceMarkup; //'0.15' for 15%
     private String pricingRationale; //'high demand', 'low stock'
+
+    private String dataSource;
 }
