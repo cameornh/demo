@@ -143,7 +143,7 @@ public class DataStreamerService {
         return order;
     }
     //TODO: draw random variables from non uniform distributions
-    //TODO: time-series prediction (update burnout range), change dynamic pricing?
+    //TODO: time-series prediction
 
     //TODO: implement event scheduling into frontend
     //TODO: implement price changing system into frontend
