@@ -13,6 +13,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
@@ -51,6 +52,7 @@ public class DataStreamerService {
         for (int i = 0; i < ordersToGenerate; i++) {
             //create new order object with random data
             //Order newOrder = new Order();
+            /**
             Order newOrder = createRandomOrder(locationId);
 
             orderRepository.save(newOrder);
@@ -75,8 +77,20 @@ public class DataStreamerService {
             orderRepository.save(newOrder);
             **/
 
-
+            processSingleOrder(locationId);
         }
+    }
+
+    @Transactional(propagation = Propagation.REQUIRES_NEW)
+    public void processSingleOrder(int locationId) {
+        Order newOrder = createRandomOrder(locationId);
+        orderRepository.saveAndFlush(newOrder); //write to db immediately
+
+        depleteInventoryForOrder(newOrder);
+
+        //clear cache so next order starts with fresh slate
+        entityManager.flush();
+        entityManager.clear();
     }
 
     private void depleteInventoryForOrder(Order order) {
@@ -107,7 +121,7 @@ public class DataStreamerService {
             newLog.setStockLevel(newStock);
             newLog.setReorderSuggested(newStock < 20); //reorder
 
-            inventoryLogRepository.save(newLog);
+            inventoryLogRepository.saveAndFlush(newLog);
             log.info("Ingredient #{}: Stock at location{} changed from {} to {}", ingId, order.getLocationId(), currentStock, newStock);
         }
     }
@@ -116,7 +130,7 @@ public class DataStreamerService {
         //same as in DashboardService
         String sql = "SELECT stock_level FROM inventory_logs " +
                 "WHERE location_id = :locId AND ing_id = :ingId " +
-                "ORDER BY log_date DESC, log_id DESC LIMIT 1";
+                "ORDER BY log_id DESC LIMIT 1";
         Query q = entityManager.createNativeQuery(sql);
         q.setParameter("locId", locationId);
         q.setParameter("ingId", ingId);
@@ -142,8 +156,8 @@ public class DataStreamerService {
         order.setIsSurgePricing(random.nextDouble() > 0.8); //20% chance of surge
         return order;
     }
-    //TODO: draw random variables from non uniform distributions
-    //TODO: time-series prediction
+    //TO//DO: draw random variables from non-uniform distributions
+    //TO//DO: time-series prediction
 
     //TODO: implement event scheduling into frontend
     //TODO: implement price changing system into frontend
